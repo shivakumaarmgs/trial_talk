@@ -28,7 +28,8 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
-        TalkBot::Session.create(caller_id: @order.performer_id, caller_number: @order.performer.number, reciever_id: @order.client_id, reciever_number: @order.client.number, duration: @order.duration, order_id: @order.id)
+        #TalkBot::Session.create(caller_id: @order.performer_id, caller_number: @order.performer.number, reciever_id: @order.client_id, reciever_number: @order.client.number, duration: @order.duration, order_id: @order.id)
+        session_hook(@order.performer_id, @order.performer.number, @order.client_id, @order.client.number, @order.duration, @order.id)
 
         format.html { redirect_to @order, notice: 'Order was successfully created.' }
         format.json { render action: 'show', status: :created, location: @order }
